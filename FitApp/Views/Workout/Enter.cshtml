@@ -1,0 +1,72 @@
+﻿
+
+@{
+    ViewBag.Title = "Enter";
+   
+}
+
+<h2>Enter</h2>
+
+@using (Html.BeginForm("Workouts", "Api"))
+{
+
+
+    <div class="form-group">
+        @Html.Label("Exercise:")
+        @Html.TextBox("ExerciseName", "", new { @class = "form-control", @id = "exerciseName", @placeholder = "Exercise name" })
+        @Html.TextBox("ExerciseId", "", new { @class = "form-control", @id = "exerciseId", @type = "hidden" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("NumberOfExercises", "First Set:")
+        @Html.TextBox("first", 0, new { min = 0, max=99,  @class = "form-control", @type = "number", @style = "width: 65px;" })
+    </div>
+    <div class="form-group">
+        @Html.Label("NumberOfExercises", "Second Set:")
+        @Html.TextBox("second", 0, new { min = 0, max = 99, @class = "form-control", @type = "number", @style = "width: 65px;" })
+    </div>
+    <div class="form-group">
+        @Html.Label("NumberOfExercises", "Third Set:")
+        @Html.TextBox("third", 0, new { min = 0, max = 99, @class = "form-control", @type = "number", @style = "width: 65px;" })
+    </div>
+    <div class="form-group">
+        @Html.Label("NumberOfExercises", "Fourth Set:")
+        @Html.TextBox("fourth", 0, new { min = 0, max = 99, @class = "form-control", @type = "number", @style = "width: 65px;" })
+    </div>
+    <div class="form-group">
+        @Html.Label("NumberOfExercises", "Fifth Set:")
+        @Html.TextBox("fifth", 0, new { min = 0, max = 99, @class = "form-control", @type = "number", @style="width: 65px;" })
+    </div>
+
+    
+
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            var exercises = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('ExerciseName'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: {
+                    url: '/api/exercises?term=%QUERY',
+                    wildcard: '%QUERY'
+                }
+            });
+
+            $('#exerciseName').typeahead({
+                minLenght: 3,
+                highlight: true
+            }, {
+                name: 'exercises',
+                display: 'ExerciseName',
+                source: exercises
+            });
+        });
+    </script>
+}

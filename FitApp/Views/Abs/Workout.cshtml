@@ -1,0 +1,27 @@
+﻿@model IEnumerable<FitApp.Models.Abs>
+@{
+    ViewBag.Title = "Workout";
+}
+
+<h2>Workout</h2>
+
+@foreach (var exercise in Model)
+{
+    <button class="btn btn-link js-instructions">
+        @exercise.ExerciseName
+    </button><br/>
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $(".js-instructions").on("click", function () {
+                bootbox.alert({
+                    message: "Here goes video or instructions...",
+                    backdrop: true
+                });
+            });
+        })
+    </script>
+}
